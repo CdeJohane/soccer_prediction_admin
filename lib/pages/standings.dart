@@ -8,7 +8,7 @@ class StandingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       body: Center(
-        child: Text('Hello From Main Screen'),
+        child: Text('Hello From Standings'),
       ),
     );
   }
