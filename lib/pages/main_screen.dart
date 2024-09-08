@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:soccer_predict_admin/components/addPlayer.dart';
 import 'package:soccer_predict_admin/controller/provider.dart';
 import 'package:soccer_predict_admin/pages/add_delete.dart';
 import 'package:soccer_predict_admin/pages/fixtures.dart';
@@ -36,6 +37,7 @@ class MainPage extends ConsumerWidget {
             fontWeight: FontWeight.bold
           ),
         ),
+        actions: const [AddPlayerBtn()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexBottomNavBar,
