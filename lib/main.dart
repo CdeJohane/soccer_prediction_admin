@@ -5,10 +5,14 @@ import 'package:soccer_predict_admin/pages/main_screen.dart';
 
 
 void main() async{
-  await dotenv.load(fileName: '.env');
+  
+  await dotenv.load(fileName: './.env');
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MaterialApp(
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+        ),
         debugShowCheckedModeBanner: false,
         title: 'Soccer Prediction Admin',
         home: MainPage()

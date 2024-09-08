@@ -18,12 +18,30 @@ class MainPage extends ConsumerWidget {
       ResultsPage(),
       AddDeletePage()
     ];
+    final pageNames = [
+      'Standings',
+      'Fixtures',
+      'Results',
+      'Update Info'
+    ];
     // For Provider
     final indexBottomNavBar = ref.watch(indexBottomNavbarProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          pageNames[indexBottomNavBar],
+          style: TextStyle(
+            color: Colors.grey[50],
+            fontWeight: FontWeight.bold
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexBottomNavBar,
+        selectedItemColor: Colors.grey[300],
+        unselectedItemColor: Colors.grey[500],
+        backgroundColor: Colors.grey[700],
         onTap: (value) {
           ref.read(indexBottomNavbarProvider.notifier).update((state) => value);
         },
@@ -32,7 +50,7 @@ class MainPage extends ConsumerWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.event), label: 'Fixtures'),
           BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Results'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Add/Delete'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Update Info'),
         ],
       ),
       body: bodies[indexBottomNavBar]
