@@ -25,6 +25,10 @@ class MainPage extends ConsumerWidget {
       'Results',
       'Update Info'
     ];
+    // For actions
+    const actionAppBar = [
+      AddPlayerBtn()
+    ];
     // For Provider
     final indexBottomNavBar = ref.watch(indexBottomNavbarProvider);
 
@@ -37,7 +41,7 @@ class MainPage extends ConsumerWidget {
             fontWeight: FontWeight.bold
           ),
         ),
-        actions: const [AddPlayerBtn()],
+        actions: [indexBottomNavBar == 0 ?AddPlayerBtn() : SizedBox.shrink()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexBottomNavBar,

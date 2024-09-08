@@ -7,7 +7,7 @@ class AddPlayerBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         showDialog(context: context, builder: (BuildContext context){
           TextEditingController nameController = TextEditingController();
@@ -37,7 +37,10 @@ class AddPlayerBtn extends StatelessWidget {
           );
         });
       },
-      child: const Text('Add Player')
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Text('Add Player', style: TextStyle(color: Colors.grey[500]),),
+      )
     );
   }
 }
