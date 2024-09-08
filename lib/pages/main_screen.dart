@@ -12,7 +12,7 @@ class MainPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Pages
-    final bodies = [
+    const bodies = [
       StandingsPage(),
       FixturesPage(),
       ResultsPage(),
