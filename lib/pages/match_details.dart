@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soccer_predict_admin/components/modifyPrediction.dart';
+import 'package:soccer_predict_admin/controller/prediction_request.dart';
 import 'package:soccer_predict_admin/data/teams.dart';
 
 class MatchDetailsPage extends StatelessWidget {
@@ -11,7 +13,8 @@ class MatchDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: match['complete'] == 0 ? Text('Fixture') : Text('Result'),
+        title: match['complete'] == 0 ? const Text('Fixture') : const Text('Result'),
+        actions: [match['complete'] == 0 ? const ModPredictionBtn() : const SizedBox.shrink()],
       ),
       body: Center(
         child: Column(
@@ -68,45 +71,53 @@ class MatchDetailsPage extends StatelessWidget {
             ),
             Expanded(
               flex: 8,
-              child: ListView.builder(
-                itemCount: 15,
-                itemBuilder:(context, index) {
-                  return GestureDetector(
-                  onTap: () {
-                    // Relocate to amtch details page
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const MatchDetailsPage())
-                    );
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 60,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.grey[200]!
-                          )
-                        )
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 7,
-                            child: Align(alignment: Alignment.centerLeft ,child:Padding(
-                              padding: const EdgeInsets.only(left: 18.0),
-                              child: Text('Player Selected', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),),
-                            )),
+              child: FutureBuilder(
+                future: getMatchPrediction(match['id']), 
+                builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                  // Check the state of the Future
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Loading');  // Show loading indicator while waiting
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));  // Show error if any
+                  } else if (snapshot.hasData) {
+                    // Access the List<dynamic> once data is available
+                    int length = snapshot.data?.length ?? 0;  // Get the length of the list
+                    return ListView.builder(
+                      itemCount: length,
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 60,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey[200]!
+                                )
+                              )
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child: Align(alignment: Alignment.centerLeft ,child:Padding(
+                                    padding: const EdgeInsets.only(left: 18.0),
+                                    child: Text('Player Selected', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),),
+                                  )),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Align(alignment:Alignment.center, child: Text('Home', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200),))
+                                )
+                              ]
+                            ),
                           ),
-                          Expanded(
-                            flex: 3,
-                            child: Align(alignment:Alignment.center, child: Text('Home', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200),))
-                          )
-                        ]
-                      ),
-                    ),
-                  ),
-                );
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(child: Text('No Predictions available'));
+                  }
                 },
               ),
             ),
