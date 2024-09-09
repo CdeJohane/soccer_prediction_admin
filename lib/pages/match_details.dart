@@ -1,14 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soccer_predict_admin/data/teams.dart';
 
 class MatchDetailsPage extends StatelessWidget {
-  const MatchDetailsPage({super.key});
+  final match;
+
+  const MatchDetailsPage({super.key, this.match});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fixture'),
+        title: match['complete'] == 0 ? Text('Fixture') : Text('Result'),
       ),
       body: Center(
         child: Column(
@@ -21,7 +24,7 @@ class MatchDetailsPage extends StatelessWidget {
                 color: Colors.grey[800],
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.95,
-                  child: const Padding(
+                  child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,13 +34,13 @@ class MatchDetailsPage extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 4,
-                              child: Text('Manchester United', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
+                              child: Text(teams[match['home_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
                             ),
                             Expanded(
                               flex: 1,
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text('-', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                child: Text(match['complete'] == 0 ? '-' : match['home_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
                               )
                             )
                           ],
@@ -46,13 +49,13 @@ class MatchDetailsPage extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 4,
-                              child: Text('Manchester City', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
+                              child: Text(teams[match['away_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
                             ),
                             Expanded(
                               flex: 1,
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text('-', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                child: Text(match['complete'] == 0 ? '-' : match['away_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
                               )
                             )
                           ],

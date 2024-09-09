@@ -27,7 +27,7 @@ class FixturesPage extends StatelessWidget {
                   onTap: () {
                     // Relocate to amtch details page
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const MatchDetailsPage())
+                      MaterialPageRoute(builder: (context) => MatchDetailsPage(match: snapshot.data?[index],))
                     );
                   },
                   child: SizedBox(
