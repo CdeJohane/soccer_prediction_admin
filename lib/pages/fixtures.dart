@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:soccer_predict_admin/controller/fixtures_request.dart';
+import 'package:soccer_predict_admin/pages/match_details.dart';
 
 class FixturesPage extends StatelessWidget {
   const FixturesPage({super.key});
@@ -24,8 +25,9 @@ class FixturesPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Fluttertoast.showToast(
-                      msg: "I have been Pressed",
+                    // Relocate to amtch details page
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const MatchDetailsPage())
                     );
                   },
                   child: SizedBox(
