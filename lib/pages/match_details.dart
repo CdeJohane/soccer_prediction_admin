@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soccer_predict_admin/components/modifyPrediction.dart';
+import 'package:soccer_predict_admin/components/placeResult.dart';
 import 'package:soccer_predict_admin/controller/player_request.dart';
 import 'package:soccer_predict_admin/controller/prediction_request.dart';
 import 'package:soccer_predict_admin/data/teams.dart';
@@ -32,47 +33,55 @@ class MatchDetailsPage extends StatelessWidget {
               child: Card(
                 elevation: 50,
                 color: Colors.grey[800],
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: Text(teams[match['home_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(match['complete'] == 0 ? '-' : match['home_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                child: GestureDetector(
+                  onTap: () {
+                    // Open Up Dialog of result
+                    showDialog(context: context, builder: (BuildContext context){
+                      return Placeresult(match_id: match['id'],checkComplete: match['complete'],);
+                    });
+                  },
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: Text(teams[match['home_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(match['complete'] == 0 ? '-' : match['home_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                )
                               )
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: Text(teams[match['away_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(match['complete'] == 0 ? '-' : match['away_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: Text(teams[match['away_team_code']]!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(match['complete'] == 0 ? '-' : match['away_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                )
                               )
-                            )
-                          ],
-                        )
-                      ],
+                            ],
+                          )
+                        ],
+                      )
                     )
-                  )
+                  ),
                 ),
               )
             ),
