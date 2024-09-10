@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soccer_predict_admin/components/modifyPrediction.dart';
+import 'package:soccer_predict_admin/controller/player_request.dart';
 import 'package:soccer_predict_admin/controller/prediction_request.dart';
 import 'package:soccer_predict_admin/data/teams.dart';
 
@@ -11,10 +12,11 @@ class MatchDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<List<dynamic>> getPlayers = getAllPlayers();
     return Scaffold(
       appBar: AppBar(
         title: match['complete'] == 0 ? const Text('Fixture') : const Text('Result'),
-        actions: [match['complete'] == 0 ? const ModPredictionBtn() : const SizedBox.shrink()],
+        actions: [match['complete'] == 0 ?  ModPredictionBtn(players: getPlayers, match_id: match['id'],) : const SizedBox.shrink()],
       ),
       body: Center(
         child: Column(
