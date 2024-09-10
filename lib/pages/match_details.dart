@@ -13,6 +13,11 @@ class MatchDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List<dynamic>> getPlayers = getAllPlayers();
+    const homeOrAway = [
+      'Draw',
+      'Home',
+      'Away'
+    ];
     return Scaffold(
       appBar: AppBar(
         title: match['complete'] == 0 ? const Text('Fixture') : const Text('Result'),
@@ -104,12 +109,23 @@ class MatchDetailsPage extends StatelessWidget {
                                   flex: 7,
                                   child: Align(alignment: Alignment.centerLeft ,child:Padding(
                                     padding: const EdgeInsets.only(left: 18.0),
-                                    child: Text('Player Selected', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),),
+                                    child: FutureBuilder<String>(
+                                      future: getPlayerName(snapshot.data![index]['player_id']),
+                                      builder: (BuildContext context, AsyncSnapshot<String> nameSnap){
+                                        if (nameSnap.connectionState == ConnectionState.waiting) {
+                                          return const Text('Loading');  // Show loading indicator while waiting
+                                        }else if (nameSnap.data!.isEmpty){
+                                          return Text("Generic Selected", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200));
+                                        } else {
+                                          return Text("${nameSnap.data!} selected", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800));
+                                        }
+                                      },
+                                    ),
                                   )),
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: Align(alignment:Alignment.center, child: Text('Home', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200),))
+                                  child: Align(alignment:Alignment.center, child: Text(homeOrAway[snapshot.data![index]['home_or_away']], style: TextStyle(fontSize: 18, fontWeight: FontWeight.w200),))
                                 )
                               ]
                             ),
