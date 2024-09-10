@@ -22,7 +22,8 @@ class _ModPredictionBtnState extends State<ModPredictionBtn> {
 
   @override
   Widget build(BuildContext context) {
-
+    final _futureBuilderKey = GlobalKey();
+    final _SecondKey = GlobalKey();
     return TextButton(
       onPressed: () {
         const predictionValue = [
@@ -48,26 +49,25 @@ class _ModPredictionBtnState extends State<ModPredictionBtn> {
                     width: double.infinity,
                     height: 60,
                     child: FutureBuilder(
+                      key: _futureBuilderKey,
                       future: widget.players,
                       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot){
                         if(snapshot.hasData){
-                          return DropdownButton(
+                          return DropdownButton<dynamic>(
                             isExpanded: true,
                             value: player_id,
                             items: snapshot.data!.map<DropdownMenuItem<dynamic>>((var value) {
                               return DropdownMenuItem<dynamic>(
                                 value: value['id'],
-                                child: Text(value['player_name'], style: TextStyle(color: Colors.white)),
+                                child: Text(value['player_name'], style: const TextStyle(color: Colors.white)),
                               );
                             }).toList(),
-                            onChanged: (var newVal){
-                              print(player_id);
+                            onChanged: (newVal){
                               setState(() {
                                 player_id = newVal;
-                                print(player_id);
+                                _futureBuilderKey.currentState?.setState(() {});
                               });
                             },
-                            // hint: Text("PICK ONE"),
                           );
                         } else {
                           return Text('Some error');
@@ -77,10 +77,25 @@ class _ModPredictionBtnState extends State<ModPredictionBtn> {
                   ),
                   // Text to Signal Player
                   const Text('Prediction'),
+                  Column(
+                    children: [
+                      RadioListTile(value: 1, groupValue: home_or_away, onChanged: (val){setState(() {
+                        home_or_away = 1;
+                      });}, title: Text('Home'),selected: home_or_away == 1,activeColor: Colors.green,),
+                      RadioListTile(value: 0, groupValue: home_or_away, onChanged: (val){setState(() {
+                        home_or_away = 0;
+                      });}, title: Text('Draw'),selected: home_or_away == 0,activeColor: Colors.green,),
+                      RadioListTile(value: 2, groupValue: home_or_away, onChanged: (val){setState(() {
+                        home_or_away = 2;
+                      });}, title: Text('Away'),selected: home_or_away == 2,activeColor: Colors.green,),
+                    ],
+                  ),
+                  /*
                   SizedBox(
+                    key: _SecondKey,
                     height: 60,
                     width: double.infinity,
-                    child: DropdownButton(
+                    child: DropdownButton<int>(
                       isExpanded: true,
                       value: home_or_away,
                       items: predictionValue.map<DropdownMenuItem<int>>((String myString){
@@ -89,13 +104,15 @@ class _ModPredictionBtnState extends State<ModPredictionBtn> {
                           child: Text(myString),
                         );
                       }).toList(),
-                      onChanged: (var newPred){
+                      onChanged: (newPred){
                         setState(() {
                           home_or_away = newPred;
+                          print(home_or_away);
+                          _SecondKey.currentState?.setState(() {});
                         });
                       },
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),
