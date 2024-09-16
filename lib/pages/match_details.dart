@@ -58,7 +58,7 @@ class MatchDetailsPage extends StatelessWidget {
                                 flex: 1,
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(match['complete'] == 0 ? '-' : match['home_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                  child: Text(match['complete'] == 0 ? '-' : "${match['home_team_score']}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
                                 )
                               )
                             ],
@@ -73,7 +73,7 @@ class MatchDetailsPage extends StatelessWidget {
                                 flex: 1,
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(match['complete'] == 0 ? '-' : match['away_score'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
+                                  child: Text(match['complete'] == 0 ? '-' : "${match['away_team_score']}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
                                 )
                               )
                             ],

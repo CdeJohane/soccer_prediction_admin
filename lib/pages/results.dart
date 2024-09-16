@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soccer_predict_admin/controller/results_request.dart';
+import 'package:soccer_predict_admin/pages/match_details.dart';
 
 class ResultsPage extends StatefulWidget {
   const ResultsPage({super.key});
@@ -57,40 +58,48 @@ class _ResultsPageState extends State<ResultsPage> {
                        return ListView.builder(
                         itemCount: length,
                         itemBuilder:(context, index) {
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 60,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.grey[200]!
+                          return GestureDetector(
+                            onTap: () {
+                              // Relocate to match details page
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => MatchDetailsPage(match: snapshot.data?[index],))
+                              );
+                            },
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 60,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey[200]!
+                                    )
                                   )
-                                )
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Align(alignment: Alignment.center ,child:Text('${snapshot.data?[index]['home_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),)),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['home_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
-                                  ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: Align(alignment: Alignment.center, child: Text('-', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),))
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['away_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Align(alignment:Alignment.center, child: Text('${snapshot.data?[index]['away_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
-                                  )
-                                ]
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Align(alignment: Alignment.center ,child:Text('${snapshot.data?[index]['home_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),)),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['home_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
+                                    ),
+                                    const Expanded(
+                                      flex: 1,
+                                      child: Align(alignment: Alignment.center, child: Text('-', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),))
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['away_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Align(alignment:Alignment.center, child: Text('${snapshot.data?[index]['away_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
+                                    )
+                                  ]
+                                ),
                               ),
                             ),
                           );
