@@ -38,7 +38,7 @@ class _ResultsPageState extends State<ResultsPage> {
         ),
         // Another to show the results of the Matchweek
         Expanded(
-          flex: 9,
+          flex: 10,
           child: Center(
             child: Column(
               children: [
@@ -76,7 +76,15 @@ class _ResultsPageState extends State<ResultsPage> {
                                   ),
                                   Expanded(
                                     flex: 1,
+                                    child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['home_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
+                                  ),
+                                  const Expanded(
+                                    flex: 1,
                                     child: Align(alignment: Alignment.center, child: Text('-', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),))
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Align(alignment: Alignment.center, child: Text('${snapshot.data?[index]['away_team_score']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
                                   ),
                                   Expanded(
                                     flex: 3,
