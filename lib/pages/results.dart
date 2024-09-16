@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soccer_predict_admin/controller/results_request.dart';
 
 class ResultsPage extends StatefulWidget {
   const ResultsPage({super.key});
@@ -45,7 +46,55 @@ class _ResultsPageState extends State<ResultsPage> {
                   flex: 1,
                   child: Text('MatchDay $match_week', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),),
                 ),
-                Expanded(flex: 8, child: Center(child: Text('My Text')))
+                Expanded(flex: 11, child: Center(
+                  child: FutureBuilder(future: getMatchResults(match_week!), builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Text('Loading');  // Show loading indicator while waiting
+                    } else if (snapshot.hasError) {
+                      return Text('Mate, no results here yet');  // Show error if any
+                    } else if (snapshot.hasData){
+                       int length = snapshot.data?.length ?? 0;
+                       return ListView.builder(
+                        itemCount: length,
+                        itemBuilder:(context, index) {
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 60,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey[200]!
+                                  )
+                                )
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Align(alignment: Alignment.center ,child:Text('${snapshot.data?[index]['home_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),)),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Align(alignment: Alignment.center, child: Text('-', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),))
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Align(alignment:Alignment.center, child: Text('${snapshot.data?[index]['away_team_code']}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),))
+                                  )
+                                ]
+                              ),
+                            ),
+                          );
+                        },
+                       );
+                    }
+                    else{
+                      return Text('Nothing here to see mate');
+                    }
+                    }
+                  )
+                ))
               ],
             ),
           ),
